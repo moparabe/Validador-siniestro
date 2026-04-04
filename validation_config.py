@@ -17,19 +17,17 @@ import re
 # Modifica estos conjuntos cuando cambien los valores de negocio.
 # ---------------------------------------------------------------------------
 CATALOGOS = {
-    "TIPO_AJUSTE": {"TRADICIONAL", "AGIL"},
+    "AJUSTE": {"AUTOS", "VIDA"},
     "ESTADO_DOCUMENTO": {"RECIBIDO", "PENDIENTE"},
-    "ESTADO_ACTUAL": {"ABIERTO", "CERRADO"},
 }
 
 # ---------------------------------------------------------------------------
 # PATRONES REGEX REUTILIZABLES
 # ---------------------------------------------------------------------------
 PATRON_SOLO_DIGITOS = re.compile(r"^\d+$")
-PATRON_SINIESTRO_NUMERICO = re.compile(r"^\d{13}$")          # Exactamente 13 dígitos
-PATRON_SINIESTRO_BAN = re.compile(r"^BAN\d{10}$")            # BAN + exactamente 10 dígitos
-PATRON_POLIZA = re.compile(r"^\d{12}$")                      # Exactamente 12 dígitos
-PATRON_POLIZA_BAN = re.compile(r"^BAN\d{9}$")                # BAN + exactamente 9 dígitos
+PATRON_SINIESTRO_NUMERICO = re.compile(r"^\d{8}$")          # Exactamente 8 dígitos
+PATRON_SINIESTRO_SAN = re.compile(r"^SAN\d{5}$")            # SAN + exactamente 5 dígitos
+PATRON_POLIZA = re.compile(r"^\d{9}$")                       # Exactamente 9 dígitos
 PATRON_RAMO = re.compile(r"^0\d{2}$")                        # 3 dígitos que inician en 0
 PATRON_EMAIL = re.compile(r"^[\w\.\+\-]+@[\w\-]+\.[a-zA-Z]{2,}$")
 
@@ -64,15 +62,15 @@ FORMATO_FECHA_SALIDA = "%d/%m/%Y"   # Formato estándar de salida para Power BI
 # ---------------------------------------------------------------------------
 COLUMN_RULES: dict = {
     # ── Identificadores ─────────────────────────────────────────────────────
-    "SINIESTRO_ID": {
+    "SINIESTRO": {
         "required": True,
         "type": "siniestro",
-        "description": "Número de siniestro (13 dígitos ó BAN + 10 dígitos)",
+        "description": "Número de siniestro (8 dígitos ó SAN + 5 dígitos)",
     },
-    "NUMERO_DE_POLIZA": {
+    "POLIZA": {
         "required": True,
         "type": "poliza",
-        "description": "Número de póliza (exactamente 12 dígitos)",
+        "description": "Número de póliza (exactamente 9 dígitos)",
     },
     "RAMO": {
         "required": True,
@@ -88,24 +86,17 @@ COLUMN_RULES: dict = {
     },
 
     # ── Catálogos ────────────────────────────────────────────────────────────
-    "TIPO_AJUSTE": {
+    "AJUSTE": {
         "required": True,
         "type": "catalog",
-        "catalog_key": "TIPO_AJUSTE",
-        "description": "Tipo de ajuste (valores permitidos: TRADICIONAL, AGIL)",
+        "catalog_key": "AJUSTE",
+        "description": "Tipo de ajuste (valores permitidos: AUTOS, VIDA)",
     },
     "ESTADO_DOCUMENTO": {
         "required": True,
         "type": "catalog",
         "catalog_key": "ESTADO_DOCUMENTO",
         "description": "Estado del documento (valores permitidos: RECIBIDO, PENDIENTE)",
-    },
-
-    "ESTADO_ACTUAL": {
-        "required": True,
-        "type": "catalog",
-        "catalog_key": "ESTADO_ACTUAL",
-        "description": "Estado actual del siniestro (valores permitidos: ABIERTO, CERRADO)",
     },
 
     # ── Fechas ───────────────────────────────────────────────────────────────
@@ -146,7 +137,7 @@ COLUMN_RULES: dict = {
     },
 
     # ── Campos numéricos ─────────────────────────────────────────────────────
-    "RESERVA_SUGERIDA": {
+    "RESERVA": {
         "required": True,
         "type": "numeric",
         "allow_decimal": True,
@@ -156,12 +147,19 @@ COLUMN_RULES: dict = {
     },
 
     # ── Campos de texto ──────────────────────────────────────────────────────
-    "NOMBRE_ASEGURADO": {
+    "ASEGURADO": {
         "required": True,
         "type": "text",
         "min_len": 2,
         "max_len": 200,
         "description": "Nombre completo del asegurado",
+    },
+    "ESTADO": {
+        "required": True,
+        "type": "text",
+        "min_len": 2,
+        "max_len": 50,
+        "description": "Estado actual del siniestro",
     },
     "ANALISTA": {
         "required": True,
@@ -208,10 +206,10 @@ COLUMNAS_SALIDA = (
 # ---------------------------------------------------------------------------
 HOMOLOGACION_COLUMNAS: dict = {
     # Variantes comunes de SINIESTRO
-    "SINISTRO": "SINIESTRO_ID",
-    "NO_SINIESTRO": "SINIESTRO_ID",
-    "NUM_SINIESTRO": "SINIESTRO_ID",
-    "NUMERO_SINIESTRO": "SINIESTRO_ID",
+    "SINISTRO": "SINIESTRO",
+    "NO_SINIESTRO": "SINIESTRO",
+    "NUM_SINIESTRO": "SINIESTRO",
+    "NUMERO_SINIESTRO": "SINIESTRO",
     # Variantes de NIT/CC
     "NIT": "NIT/CC",
     "CC": "NIT/CC",
