@@ -71,7 +71,7 @@ Cada capa solo conoce a la capa que tiene debajo. La UI no contiene lógica de n
 Cada columna tiene una entrada en `COLUMN_RULES` (en `validation_config.py`):
 
 ```python
-"SINIESTRO": {
+"SINIESTRO_ID": {
     "required": True,          # ¿Es obligatorio?
     "type": "siniestro",       # Tipo de validador a aplicar
     "description": "...",      # Texto para mensajes de error
@@ -84,17 +84,17 @@ Para agregar una nueva columna: solo añadir una entrada al diccionario. No hay 
 
 | Columna | Regla |
 |---|---|
-| `SINIESTRO` | 8 dígitos exactos, O "SAN" + 5 dígitos, sin espacios ni especiales, no vacío |
-| `POLIZA` | 9 dígitos exactos, solo dígitos, no vacío |
+| `SINIESTRO_ID` | 13 dígitos exactos, O "BAN" + 10 dígitos, sin espacios ni especiales, no vacío |
+| `NUMERO_DE_POLIZA` | 12 dígitos exactos, solo dígitos, no vacío |
 | `RAMO` | 3 dígitos, inicia con "0", solo dígitos, no vacío |
 | `NIT/CC` | Solo dígitos, entre 6 y 15 caracteres |
-| `AJUSTE` | Valor en catálogo: AUTOS, VIDA |
+| `TIPO_AJUSTE` | Valor en catálogo: TRADICIONAL, AGIL |
 | `ESTADO_DOCUMENTO` | Valor en catálogo: RECIBIDO, PENDIENTE |
 | `FECHA_*` (7 columnas) | Formato válido, convierte a dd/mm/yyyy, rechaza fechas imposibles |
-| `RESERVA` | Número positivo, permite decimales, rechaza texto y negativos |
-| `ASEGURADO`, `ANALISTA`, `ESTADO` | Texto, longitud mín/máx, limpieza de espacios |
+| `RESERVA_SUGERIDA` | Número positivo, permite decimales, rechaza texto y negativos |
+| `NOMBRE_ASEGURADO`, `ANALISTA_SURA`, `ESTADO_ACTUAL` | Texto, longitud mín/máx, limpieza de espacios |
 | `OBSERVACIONES` | Texto opcional, máximo 500 caracteres |
-| Duplicados | `SINIESTRO` no puede repetirse dentro del mismo archivo |
+| Duplicados | `SINIESTRO_ID` no puede repetirse dentro del mismo archivo |
 
 ### Homologación de columnas
 
