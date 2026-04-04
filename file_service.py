@@ -249,11 +249,11 @@ def _aplicar_estilo_excel(writer: pd.ExcelWriter, sheet_name: str, df: pd.DataFr
 def _generar_sugerencia_correccion(columna: str) -> str:
     """Devuelve una sugerencia de corrección amigable por columna."""
     sugerencias = {
-        "SINIESTRO_ID": "Ingrese exactamente 13 dígitos (ej: 01300012345678) o el formato BAN##### (ej: BAN1234593142).",
-        "NUMERO_DE_POLIZA": "Ingrese exactamente 12 dígitos sin letras ni espacios (ej: 100023456789) o el formato BAN##### (ej: BAN123459314).",
-        "RAMO": "Ingrese exactamente 3 dígitos iniciando con 0 (ej: 012, 034, 030).",
+        "SINIESTRO": "Ingrese exactamente 8 dígitos (ej: 12345678) o el formato SAN##### (ej: SAN12345).",
+        "POLIZA": "Ingrese exactamente 9 dígitos sin letras ni espacios (ej: 123456789).",
+        "RAMO": "Ingrese exactamente 3 dígitos iniciando con 0 (ej: 012, 034, 099).",
         "NIT/CC": "Ingrese solo dígitos, sin puntos ni guiones (ej: 9001234567).",
-        "TIPO_AJUSTE": "Use únicamente los valores: TRADICIONAL o AGIL (en mayúsculas).",
+        "AJUSTE": "Use únicamente los valores: AUTOS o VIDA (en mayúsculas).",
         "ESTADO_DOCUMENTO": "Use únicamente los valores: RECIBIDO o PENDIENTE (en mayúsculas).",
         "RESERVA": "Ingrese un número positivo sin símbolos de moneda (ej: 1500000 o 1500000.50).",
     }
