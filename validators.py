@@ -492,6 +492,10 @@ def validar_dataframe(df: pd.DataFrame) -> dict:
     timestamp_carga = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     df_work = df.copy()
 
+    # Convertir todas las columnas a object para evitar TypeError en pandas
+    # Cuando se asigna None o texto a columnas numericas o de fechas
+    df
+
     # Registros de errores por fila
     errores_por_fila: dict[int, list[str]] = {}   # fila_excel → [mensajes]
 
