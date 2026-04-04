@@ -19,6 +19,7 @@ import re
 CATALOGOS = {
     "TIPO_AJUSTE": {"TRADICIONAL", "AGIL"},
     "ESTADO_DOCUMENTO": {"RECIBIDO", "PENDIENTE"},
+    "ESTADO_ACTUAL": {"ABIERTO", "CERRADO"},
 }
 
 # ---------------------------------------------------------------------------
