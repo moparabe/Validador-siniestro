@@ -66,7 +66,7 @@ COLUMN_RULES: dict = {
     "SINIESTRO_ID": {
         "required": True,
         "type": "siniestro",
-        "description": "Número de siniestro (8 dígitos ó BAN + 10 dígitos)",
+        "description": "Número de siniestro (13 dígitos ó BAN + 10 dígitos)",
     },
     "NUMERO_DE_POLIZA": {
         "required": True,

@@ -31,7 +31,7 @@ from validation_config import (
     PATRON_POLIZA,
     PATRON_RAMO,
     PATRON_SINIESTRO_NUMERICO,
-    PATRON_SINIESTRO_SAN,
+    PATRON_SINIESTRO_BAN,
     PATRON_SOLO_DIGITOS,
 )
 
@@ -74,38 +74,38 @@ def validar_siniestro(valor: Any) -> tuple[Any, Optional[str]]:
     if PATRON_SINIESTRO_NUMERICO.match(v):
         return v, None
 
-    if PATRON_SINIESTRO_SAN.match(v):
+    if PATRON_SINIESTRO_BAN.match(v):
         return v, None
 
     # Dar un mensaje específico según el patrón incorrecto
-    if v.startswith("SAN"):
-        digitos_san = v[3:]
-        if not PATRON_SOLO_DIGITOS.match(digitos_san):
+    if v.startswith("BAN"):
+        digitos_ban = v[3:]
+        if not PATRON_SOLO_DIGITOS.match(digitos_ban):
             return v, (
-                f"El siniestro '{v}' tiene el prefijo SAN pero contiene "
+                f"El siniestro '{v}' tiene el prefijo BAN pero contiene "
                 "caracteres no numéricos después del prefijo."
             )
         return v, (
-            f"El siniestro '{v}' tiene el prefijo SAN pero debe ir seguido "
-            f"de exactamente 5 dígitos (recibidos: {len(digitos_san)})."
+            f"El siniestro '{v}' tiene el prefijo BAN pero debe ir seguido "
+            f"de exactamente 10 dígitos (recibidos: {len(digitos_ban)})."
         )
 
     if re.search(r"[A-Za-z]", v):
         return v, (
             f"El siniestro '{v}' contiene letras. Solo se permite el prefijo "
-            "SAN (mayúscula) seguido de 5 dígitos, o exactamente 8 dígitos."
+            "BAN (mayúscula) seguido de 10 dígitos, o exactamente 13 dígitos."
         )
 
     if not PATRON_SOLO_DIGITOS.match(v):
         return v, (
             f"El siniestro '{v}' contiene caracteres especiales o espacios. "
-            "Solo se permiten dígitos o el formato SAN#####."
+            "Solo se permiten dígitos o el formato BAN#####."
         )
 
     return v, (
         f"El siniestro '{v}' no cumple el formato esperado. "
-        f"Debe tener exactamente 8 dígitos (recibidos: {len(v)}) "
-        "o el formato SAN##### (SAN + 5 dígitos)."
+        f"Debe tener exactamente 13 dígitos (recibidos: {len(v)}) "
+        "o el formato BAN##### (BAN + 10 dígitos)."
     )
 
 
@@ -113,7 +113,7 @@ def validar_poliza(valor: Any) -> tuple[Any, Optional[str]]:
     """
     Reglas:
       - No puede estar vacío.
-      - Debe tener exactamente 9 dígitos.
+      - Debe tener exactamente 12 dígitos.
       - No se permiten letras, espacios ni caracteres especiales.
     """
     if _es_vacio(valor):
