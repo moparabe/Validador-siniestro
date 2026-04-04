@@ -494,7 +494,7 @@ def validar_dataframe(df: pd.DataFrame) -> dict:
 
     # Convertir todas las columnas a object para evitar TypeError en pandas
     # Cuando se asigna None o texto a columnas numericas o de fechas
-    df
+    df_work = df_work.astype(object)
 
     # Registros de errores por fila
     errores_por_fila: dict[int, list[str]] = {}   # fila_excel → [mensajes]
