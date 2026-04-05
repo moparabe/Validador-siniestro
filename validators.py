@@ -63,7 +63,7 @@ def validar_siniestro(valor: Any) -> tuple[Any, Optional[str]]:
     """
     Reglas:
       - No puede estar vacío.
-      - Debe ser exactamente 8 dígitos  OR  "SAN" + exactamente 5 dígitos.
+      - Debe ser exactamente 13 dígitos  OR  "BAN" + exactamente 10 dígitos.
       - No se permiten espacios, caracteres especiales ni letras extra.
     """
     if _es_vacio(valor):
@@ -135,7 +135,7 @@ def validar_poliza(valor: Any) -> tuple[Any, Optional[str]]:
         )
 
     return v, (
-        f"La póliza '{v}' debe tener exactamente 9 dígitos (recibidos: {len(v)})."
+        f"La póliza '{v}' debe tener exactamente 12 dígitos (recibidos: {len(v)})."
     )
 
 
