@@ -90,7 +90,7 @@ COLUMN_RULES: dict = {
     "TIPO_AJUSTE": {
         "required": True,
         "type": "catalog",
-        "catalog_key": "AJUSTE",
+        "catalog_key": "TIPO_AJUSTE",
         "description": "Tipo de ajuste (valores permitidos: TRADICIONAL, AGIL)",
     },
     "ESTADO_DOCUMENTO": {
