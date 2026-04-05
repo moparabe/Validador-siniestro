@@ -439,8 +439,7 @@ def _mostrar_boton_envio(
                 if exito:
                     st.success(
                         f"🎉 **¡Archivo enviado exitosamente!**\n\n"
-                        f"📁 Nombre guardado: `{nombre_guardado}`\n\n"
-                        f"🔗 [Ver en GitHub]({resultado})"
+                        f"📁 Nombre guardado: `{nombre_guardado}`"
                     )
                     st.info(
                         f"ℹ️ Se enviaron **{resumen['filas_validas']} registros válidos**. "
