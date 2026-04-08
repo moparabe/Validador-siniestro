@@ -136,15 +136,15 @@ def validar_poliza(valor: Any) -> tuple[Any, Optional[str]]:
 
     # Mensaje especifico si usa prefijo BAN pero no cumple el formato correcto
     if v.startswith("BAN"):
-        digitos ban = v[3:]
-        if not PATRON_SOLO_DIGITOS.match(digitos_ban) if digitos_ban else True:
+        digitos_BAN = v[3:]
+        if not digitos_BAN or not PATRON_SOLO_DIGITOS.match(digitos_BAN):
             return v, (
                 f"La póliza '{v}' tiene el prefijo BAN pero contiene "
                 "caracteres no numéricos después del prefijo."
             )
         return v, (
             f"La póliza '{v}' tiene el prefijo BAN pero debe ir seguido "
-            f"de exactamente 9 dígitos (recibidos: {len(digitos_ban)})."
+            f"de exactamente 9 dígitos (recibidos: {len(digitos_BAN)})."
         )
 
     # Contiene letras distintas a BAN
