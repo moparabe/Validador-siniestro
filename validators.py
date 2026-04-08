@@ -30,6 +30,7 @@ from validation_config import (
     PATRON_EMAIL,
     PATRON_POLIZA,
     PATRON_RAMO,
+    PATRON_POLIZA_BAN,
     PATRON_SINIESTRO_NUMERICO,
     PATRON_SINIESTRO_BAN,
     PATRON_SOLO_DIGITOS,
@@ -113,27 +114,52 @@ def validar_poliza(valor: Any) -> tuple[Any, Optional[str]]:
     """
     Reglas:
       - No puede estar vacío.
-      - Debe tener exactamente 12 dígitos.
+      - Debe tener exactamente 12 dígitos O "BAN" + exactamente 9 dígitos.
       - No se permiten letras, espacios ni caracteres especiales.
     """
     if _es_vacio(valor):
         return None, "El número de póliza es obligatorio y viene vacío."
 
-    v = str(valor).strip()
+    v = str(valor).strip().upper()
 
     # Eliminar ceros a la izquierda solo si viene como número flotante (ej: 123456789.0)
     if re.match(r"^\d+\.0$", v):
         v = v[:-2]
 
+    # Formato numerico estandar: exactamente 12 dígitos
     if PATRON_POLIZA.match(v):
         return v, None
 
+    # Formato BAN: "BAN" + exactamente 9 dígitos
+    if PATRON_POLIZA_BAN.match(v):
+        return v, None
+
+    # Mensaje especifico si usa prefijo BAN pero no cumple el formato correcto
+    if v.startswith("BAN"):
+        digitos ban = v[3:]
+        if not PATRON_SOLO_DIGITOS.match(digitos_ban) if digitos_ban else True:
+            return v, (
+                f"La póliza '{v}' tiene el prefijo BAN pero contiene "
+                "caracteres no numéricos después del prefijo."
+            )
+        return v, (
+            f"La póliza '{v}' tiene el prefijo BAN pero debe ir seguido "
+            f"de exactamente 9 dígitos (recibidos: {len(digitos_ban)})."
+        )
+
+    # Contiene letras distintas a BAN
+    if re.search(r"[A-Za-z]", v):
+        return v, (
+            f"La póliza '{v}' contiene letras no permitidas. Solo se acepta el prefijo "
+            "BAN (mayúscula) seguido de 9 dígitos, o exactamente 12 dígitos."
+        )
+
+    # Solo Digitos pero longitud incorrecta
     if not PATRON_SOLO_DIGITOS.match(v):
         return v, (
             f"La póliza '{v}' contiene caracteres no permitidos. "
-            "Solo se aceptan dígitos (sin letras, espacios ni símbolos)."
+            "Solo se aceptan dígitos o el formato BAN######### (BAN + 9 dígitos)."
         )
-
     return v, (
         f"La póliza '{v}' debe tener exactamente 12 dígitos (recibidos: {len(v)})."
     )

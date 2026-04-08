@@ -29,6 +29,7 @@ PATRON_SOLO_DIGITOS = re.compile(r"^\d+$")
 PATRON_SINIESTRO_NUMERICO = re.compile(r"^\d{13}$")          # Exactamente 13 dígitos
 PATRON_SINIESTRO_BAN = re.compile(r"^BAN\d{10}$")            # BAN + exactamente 10 dígitos
 PATRON_POLIZA = re.compile(r"^\d{12}$")                       # Exactamente 12 dígitos
+PATRON_POLIZA_BAN = re.compile(r"^BAN\d{9}$")              # BAN + exactamente 9 dígitos
 PATRON_RAMO = re.compile(r"^0\d{2}$")                        # 3 dígitos que inician en 0
 PATRON_EMAIL = re.compile(r"^[\w\.\+\-]+@[\w\-]+\.[a-zA-Z]{2,}$")
 
@@ -71,7 +72,7 @@ COLUMN_RULES: dict = {
     "NUMERO_DE_POLIZA": {
         "required": True,
         "type": "poliza",
-        "description": "Número de póliza (exactamente 12 dígitos)",
+        "description": "Número de póliza (12 dígitos ó BAN + 9 dígitos)",
     },
     "RAMO": {
         "required": True,
