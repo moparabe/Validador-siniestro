@@ -34,7 +34,7 @@ def leer_excel(archivo_bytes: bytes, max_filas: int = 5000) -> tuple[Optional[pd
     o (None, mensaje_error) si falló.
     """
     try:
-        df = pd.read_excel(io.BytesIO(archivo_bytes), engine="openpyxl")
+        df = pd.read_excel(io.BytesIO(archivo_bytes), engine="openpyxl", dtype=str)
     except Exception as e:
         return None, (
             f"No se pudo leer el archivo Excel. Asegúrese de que no esté "
