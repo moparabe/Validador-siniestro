@@ -221,6 +221,14 @@ def validar_fecha(valor: Any, nombre_columna: str) -> tuple[Any, Optional[str]]:
 
     v = str(valor).strip()
 
+    
+# ✅ NUEVO: detectar fechas tipo "2025-12-02 00:00:00"
+    try:
+        dt = pd.to_datetime(v, errors="raise")
+        return dt.strftime(FORMATO_FECHA_SALIDA), None
+    except Exception:
+        pass
+
     for fmt in FORMATOS_FECHA_ENTRADA:
         try:
             dt = datetime.strptime(v, fmt)
